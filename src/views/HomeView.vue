@@ -1,7 +1,6 @@
 <script setup>
-import { ref, watch } from "vue";
-import { GET } from "@/api/api";
-import { data } from "@/js/getMrtApi.js";
+import { ref } from "vue";
+import { getApi } from "@/js/getMrtApi.js";
 import { computed } from "@vue/reactivity";
 import {
   eachXiangshan,
@@ -12,9 +11,14 @@ import {
   eachDapinglin,
 } from "@/js/allLines.js";
 
+// api
+const data = ref(null);
+
+data.value = await getApi();
+
 // 每隔五秒重打一次api
 window.setInterval(async () => {
-  data.value = await GET("/arriveMRT");
+  data.value = await getApi();
 }, 5000);
 
 let selectStation = ref(null);
@@ -25,24 +29,8 @@ let currentStation = computed(() => {
   );
 });
 
-const DestinationName = function (Destination) {
-  return data.value.filter((item) => item.DestinationName === Destination);
-};
-
-// function generateCurrentStationArray(currentStation) {
-//   return allLines.map((line) => {
-//     return line.filter((station) => station.StationName === currentStation);
-//   });
-// }
-
-// const currentArray = generateCurrentStationArray("象山站");
-// console.log("currentArray", currentArray);
-// console.log(data.value.length);
-
-// 寫一個function來把現在selectStation丟進去 去算所有
-
 // 倒數計時
-const time = ref(null);
+// const time = ref(null);
 // watch(
 //   () => selectStation.value,
 //   () => {
@@ -114,6 +102,9 @@ const time = ref(null);
           </select>
         </div>
         <template v-if="selectStation">
+          <div style="font-weight: bold; color: orange">
+            現在時刻： {{ currentStation[0].NowDateTime }}
+          </div>
           <div class="show-board">
             <div
               class="forward"
@@ -125,14 +116,16 @@ const time = ref(null);
                 <span v-if="station.DestinationName" style="color: goldenrod">
                   {{ station.DestinationName }}</span
                 >
-                的車還剩下：
+                的車：
               </span>
               <span style="color: goldenrod">{{ station.CountDown }} </span>
-              <span v-if="station.CountDown !== '列車進站'"> 分鐘到站</span>
+              <span
+                v-if="station.CountDown == '列車進站'"
+                style="color: goldenrod"
+                >中</span
+              >
+              <span v-else> 分鐘到站</span>
             </div>
-          </div>
-          <div style="font-weight: bold; color: lightgrey; font-size: 15px">
-            現在時刻： {{ currentStation[0].NowDateTime }}
           </div>
         </template>
       </div>
@@ -169,7 +162,7 @@ const time = ref(null);
   gap: 5px;
 }
 .show-board {
-  margin-bottom: 1rem;
+  margin-top: 1rem;
   line-height: 2;
 }
 </style>

@@ -1,5 +1,9 @@
 import { ref } from "vue";
-import { data } from "./getMrtApi.js";
+import { getApi } from "./getMrtApi.js";
+
+// 打api
+const data = ref(null);
+data.value = await getApi();
 
 // 去整理每個線的位置
 const DestinationName = function (Destination) {

@@ -1,12 +1,17 @@
 import { GET } from "../api/api.js";
-import { ref } from "vue";
+// 包成一個function
+export async function getApi() {
+  let response = null;
+  let copyResponse = null;
+  let data = null;
 
-const response = ref(null);
-response.value = await GET("/arriveMRT");
+  response = await GET("/arriveMRT");
 
-export const copyResponse = ref(null);
+  copyResponse = JSON.parse(JSON.stringify(response));
 
-copyResponse.value = JSON.parse(JSON.stringify(response.value));
+  data = addIdToArray(copyResponse);
+  return data;
+}
 
 // 產出一個每一個物件都擁有不同id的data
 function addIdToArray(array) {
@@ -17,6 +22,3 @@ function addIdToArray(array) {
     return item;
   });
 }
-
-export const data = ref(null);
-data.value = addIdToArray(copyResponse.value);
