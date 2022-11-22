@@ -6,14 +6,16 @@ import {
   eachXiangshan,
   eachZoo,
   eachXindian,
-  eachNangangExhibition,
+  eachDingpu,
   eachHuilong,
   eachDapinglin,
+  allXiangshanLineStation,
 } from "@/js/allLines.js";
 
 // api
 const data = ref(null);
 
+// 先打第一次
 data.value = await getApi();
 
 // 每隔五秒重打一次api
@@ -21,51 +23,37 @@ window.setInterval(async () => {
   data.value = await getApi();
 }, 5000);
 
+// 現在選到的是哪一站
 let selectStation = ref(null);
 
+// 把所有有包含這個站的物件拿出來存入
 let currentStation = computed(() => {
   return data.value.filter(
     (station) => station.StationName === selectStation.value
   );
 });
-
-// 倒數計時
-// const time = ref(null);
-// watch(
-//   () => selectStation.value,
-//   () => {
-//     time.value = 15;
-//     setInterval(() => {
-//       if (time.value > 0) {
-//         time.value = time.value - 1;
-//       } else {
-//         time.value = 15;
-//       }
-//     }, 1000);
-//   }
-// );
 </script>
 
 <template>
   <main>
     <div class="container">
       <div class="information">
-        <!-- <span>距離下次更新： {{ time }}</span> -->
-
-        <br />
         <div class="select-board">
           <p>你所在的車站：</p>
           <select name="station" id="station" v-model="selectStation">
             <option value="choose">--choose--</option>
             <optgroup label="淡水信義線">
-              <template v-for="station in eachXiangshan" :key="station">
+              <template
+                v-for="station in allXiangshanLineStation"
+                :key="station"
+              >
                 <option :value="station">
                   {{ station }}
                 </option>
               </template>
             </optgroup>
             <optgroup label="板南線">
-              <template v-for="station in eachNangangExhibition" :key="station">
+              <template v-for="station in eachDingpu" :key="station">
                 <option :value="station">
                   {{ station }}
                 </option>
@@ -141,9 +129,10 @@ let currentStation = computed(() => {
   height: calc(100vh - 25.6px);
 }
 .information {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   width: 500px;
-  height: 200px;
-  border-radius: 5px;
   padding: 10px;
   font-size: 20px;
 
@@ -154,7 +143,6 @@ let currentStation = computed(() => {
 }
 
 .select-board {
-  margin-bottom: 1rem;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -162,7 +150,9 @@ let currentStation = computed(() => {
   gap: 5px;
 }
 .show-board {
-  margin-top: 1rem;
   line-height: 2;
+  padding: 0 15px;
+  border-left: 1px solid #f6f6f6ea;
+  border-right: 1px solid #f6f6f6ea;
 }
 </style>
