@@ -3,13 +3,12 @@ import { ref } from "vue";
 import { getApi } from "@/js/getMrtApi.js";
 import { computed } from "@vue/reactivity";
 import {
-  eachXiangshan,
-  eachZoo,
-  eachXindian,
-  eachDingpu,
-  eachHuilong,
-  eachDapinglin,
-  allXiangshanLineStation,
+  xiangshanLine,
+  wenhuLine,
+  bannanLine,
+  LuzhuoLine,
+  xinDianLine,
+  circularLine,
 } from "@/js/allLines.js";
 
 // api
@@ -44,7 +43,8 @@ let currentStation = computed(() => {
             <option value="choose">--choose--</option>
             <optgroup label="淡水信義線">
               <template
-                v-for="station in allXiangshanLineStation"
+                v-for="station in xiangshanLine"
+                wenhuStation
                 :key="station"
               >
                 <option :value="station">
@@ -53,35 +53,35 @@ let currentStation = computed(() => {
               </template>
             </optgroup>
             <optgroup label="板南線">
-              <template v-for="station in eachDingpu" :key="station">
+              <template v-for="station in bannanLine" :key="station">
                 <option :value="station">
                   {{ station }}
                 </option>
               </template>
             </optgroup>
             <optgroup label="文湖線">
-              <template v-for="station in eachZoo" :key="station">
+              <template v-for="station in wenhuLine" :key="station">
                 <option :value="station">
                   {{ station }}
                 </option>
               </template>
             </optgroup>
             <optgroup label="松山新店線">
-              <template v-for="station in eachXindian" :key="station">
+              <template v-for="station in xinDianLine" :key="station">
                 <option :value="station">
                   {{ station }}
                 </option>
               </template>
             </optgroup>
             <optgroup label="中和新蘆站">
-              <template v-for="station in eachHuilong" :key="station">
+              <template v-for="station in LuzhuoLine" :key="station">
                 <option :value="station">
                   {{ station }}
                 </option>
               </template>
             </optgroup>
             <optgroup label="環狀線">
-              <template v-for="station in eachDapinglin" :key="station">
+              <template v-for="station in circularLine" :key="station">
                 <option :value="station">
                   {{ station }}
                 </option>

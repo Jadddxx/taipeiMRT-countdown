@@ -68,24 +68,44 @@ function eachStationName(line) {
 }
 
 export const eachXiangshan = eachStationName(allLines["toXiangshan"]);
-
-// const eachTamsui = eachStationName(allLines["toTamsui"]);
-// const eachDaan = eachStationName(allLines["toDaan"]);
-// const eachBeitou = eachStationName(allLines["toBeitou"]);
-
 export const eachZoo = eachStationName(allLines["toZoo"]);
-// const eachNangangSoftwarePark = eachStationName(
-//   allLines["toNangangSoftwarePark"]
-// );
-
 export const eachXindian = eachStationName(allLines["toXindian"]);
-
 export const eachNangangExhibition = eachStationName(
   allLines["toNangangExhibition"]
 );
-
+export const eachDingpu = eachStationName(allLines["toDingpu"]);
+//環狀線
+export const eachDapinglin = eachStationName(allLines["toDapinglin"]);
+export const eachNewTaipeiPark = eachStationName(allLines["toNewTaipeiPark"]);
+//蘆洲
+export const eachLuzhuo = eachStationName(allLines["toLuzhuo"]);
 export const eachHuilong = eachStationName(allLines["toHuilong"]);
 
-export const eachDapinglin = eachStationName(allLines["toDapinglin"]);
+// 完整的線
+export const xiangshanLine = ["象山站", ...eachXiangshan];
+export const wenhuLine = ["動物園站", ...eachZoo];
+export const bannanLine = [...eachDingpu, "頂埔站"];
 
-// 一個function來把一條線的各種方向比對
+const lostLuzhuoStation = compareLostStation(eachLuzhuo, eachHuilong);
+
+export const LuzhuoLine = [
+  ...eachLuzhuo,
+  "蘆洲站",
+  "迴龍站",
+  lostLuzhuoStation,
+].flat();
+
+export const xinDianLine = ["新店站", ...eachXindian];
+export const circularLine = ["大坪林站", ...eachDapinglin];
+
+// 比較沒有的站
+function compareLostStation(mainArray, compareArray) {
+  const lost = [];
+  for (const item of compareArray) {
+    if (mainArray.indexOf(item) === -1) {
+      lost.push(item);
+    }
+  }
+
+  return lost;
+}
