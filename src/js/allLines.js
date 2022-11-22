@@ -83,3 +83,5 @@ export const eachNangangExhibition = eachStationName(
 export const eachHuilong = eachStationName(allLines["toHuilong"]);
 
 export const eachDapinglin = eachStationName(allLines["toDapinglin"]);
+
+// 一個function來把一條線的各種方向比對

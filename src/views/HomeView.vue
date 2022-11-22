@@ -25,18 +25,6 @@ let currentStation = computed(() => {
   );
 });
 
-// let currentStationDestination = computed(() => {
-//   if (currentStation.value) {
-//     return currentStation.value.map((station) => station.DestinationName);
-//   }
-// });
-
-// let currentStationTime = computed(() => {
-//   if (currentStation.value) {
-//     return currentStation.value.map((station) => station.CountDown);
-//   }
-// });
-
 const DestinationName = function (Destination) {
   return data.value.filter((item) => item.DestinationName === Destination);
 };
@@ -55,81 +43,82 @@ const DestinationName = function (Destination) {
 
 // 倒數計時
 const time = ref(null);
-watch(
-  () => selectStation.value,
-  () => {
-    time.value = 15;
-    setInterval(() => {
-      if (time.value > 0) {
-        time.value = time.value - 1;
-      } else {
-        time.value = 15;
-      }
-    }, 1000);
-  }
-);
-
-// 往哪裡的通常沒有他自己的，需要算一下
+// watch(
+//   () => selectStation.value,
+//   () => {
+//     time.value = 15;
+//     setInterval(() => {
+//       if (time.value > 0) {
+//         time.value = time.value - 1;
+//       } else {
+//         time.value = 15;
+//       }
+//     }, 1000);
+//   }
+// );
 </script>
 
 <template>
   <main>
     <div class="container">
       <div class="information">
-        <span>距離下次更新： {{ time }}</span>
+        <!-- <span>距離下次更新： {{ time }}</span> -->
+
         <br />
-        <span>你所在的車站：</span>
-        <select name="station" id="station" v-model="selectStation">
-          <option value="choose">--choose--</option>
-          <optgroup label="淡水信義線">
-            <template v-for="station in eachXiangshan" :key="station">
-              <option :value="station">
-                {{ station }}
-              </option>
-            </template>
-          </optgroup>
-          <optgroup label="板南線">
-            <template v-for="station in eachNangangExhibition" :key="station">
-              <option :value="station">
-                {{ station }}
-              </option>
-            </template>
-          </optgroup>
-          <optgroup label="文湖線">
-            <template v-for="station in eachZoo" :key="station">
-              <option :value="station">
-                {{ station }}
-              </option>
-            </template>
-          </optgroup>
-          <optgroup label="松山新店線">
-            <template v-for="station in eachXindian" :key="station">
-              <option :value="station">
-                {{ station }}
-              </option>
-            </template>
-          </optgroup>
-          <optgroup label="中和新蘆站">
-            <template v-for="station in eachHuilong" :key="station">
-              <option :value="station">
-                {{ station }}
-              </option>
-            </template>
-          </optgroup>
-          <optgroup label="環狀線">
-            <template v-for="station in eachDapinglin" :key="station">
-              <option :value="station">
-                {{ station }}
-              </option>
-            </template>
-          </optgroup>
-        </select>
+        <div class="select-board">
+          <p>你所在的車站：</p>
+          <select name="station" id="station" v-model="selectStation">
+            <option value="choose">--choose--</option>
+            <optgroup label="淡水信義線">
+              <template v-for="station in eachXiangshan" :key="station">
+                <option :value="station">
+                  {{ station }}
+                </option>
+              </template>
+            </optgroup>
+            <optgroup label="板南線">
+              <template v-for="station in eachNangangExhibition" :key="station">
+                <option :value="station">
+                  {{ station }}
+                </option>
+              </template>
+            </optgroup>
+            <optgroup label="文湖線">
+              <template v-for="station in eachZoo" :key="station">
+                <option :value="station">
+                  {{ station }}
+                </option>
+              </template>
+            </optgroup>
+            <optgroup label="松山新店線">
+              <template v-for="station in eachXindian" :key="station">
+                <option :value="station">
+                  {{ station }}
+                </option>
+              </template>
+            </optgroup>
+            <optgroup label="中和新蘆站">
+              <template v-for="station in eachHuilong" :key="station">
+                <option :value="station">
+                  {{ station }}
+                </option>
+              </template>
+            </optgroup>
+            <optgroup label="環狀線">
+              <template v-for="station in eachDapinglin" :key="station">
+                <option :value="station">
+                  {{ station }}
+                </option>
+              </template>
+            </optgroup>
+          </select>
+        </div>
         <template v-if="selectStation">
-          <div class="showTime">
+          <div class="show-board">
             <div
               class="forward"
               v-for="station in currentStation"
-              :key="station.NowDateTime + station.CountDown"
+              :key="station.id"
             >
               <span
                 >往
@@ -141,6 +130,9 @@ watch(
               <span style="color: goldenrod">{{ station.CountDown }} </span>
               <span v-if="station.CountDown !== '列車進站'"> 分鐘到站</span>
             </div>
+          </div>
+          <div style="font-weight: bold; color: lightgrey; font-size: 15px">
+            現在時刻： {{ currentStation[0].NowDateTime }}
           </div>
         </template>
       </div>
@@ -166,5 +158,18 @@ watch(
     font-size: 20px;
     padding: 3px 5px;
   }
+}
+
+.select-board {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 5px;
+}
+.show-board {
+  margin-bottom: 1rem;
+  line-height: 2;
 }
 </style>
