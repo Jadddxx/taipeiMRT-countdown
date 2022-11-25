@@ -10,7 +10,6 @@ and you can control your commuting time.
 
 ## technique
 * Vue 3
-* 
 
 ## api
 taipei MRT api
