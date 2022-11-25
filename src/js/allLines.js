@@ -2,10 +2,13 @@ import { ref } from "vue";
 import { getApi } from "./getMrtApi.js";
 
 // 打api
-const data = ref(null);
-data.value = async function () {
-  return await getApi();
-};
+// const data = ref(copyData);
+
+// data.value = await getApi();
+
+// getApi().then((value) => {
+//   data.value = value;
+// });
 
 // 去整理每個線的位置
 const DestinationName = function (Destination) {
@@ -41,7 +44,7 @@ const toNanshigijiao = DestinationName("南勢角站");
 const toDapinglin = DestinationName("大坪林站");
 const toNewTaipeiPark = DestinationName("新北產業園區站");
 
-export const allLines = {
+const allLines = {
   toXiangshan: toXiangshan,
   toTamsui: toTamsui,
   toDaan: toDaan,
@@ -61,27 +64,22 @@ export const allLines = {
   toNewTaipeiPark: toNewTaipeiPark,
 };
 
-// 直接用allLines去 map 讓新的陣列一樣有key是線，然後裡面都是站名
-// 範例
-// const array = { 'toXiangshan': ['象山站', '信義安和站',], 'toZoo': ['動物園站', '木柵站'...] }
+const eachXiangshan = eachStationName(allLines["toXiangshan"]);
+const eachZoo = eachStationName(allLines["toZoo"]);
+const eachXindian = eachStationName(allLines["toXindian"]);
+const eachNangangExhibition = eachStationName(allLines["toNangangExhibition"]);
+const eachDingpu = eachStationName(allLines["toDingpu"]);
+//環狀線
+const eachDapinglin = eachStationName(allLines["toDapinglin"]);
+const eachNewTaipeiPark = eachStationName(allLines["toNewTaipeiPark"]);
+//蘆洲
+const eachLuzhuo = eachStationName(allLines["toLuzhuo"]);
+const eachHuilong = eachStationName(allLines["toHuilong"]);
 
-function eachStationName(line) {
+// 直接用allLines去 map 讓新的陣列一樣有key是線，然後裡面都是站名
+async function eachStationName(line) {
   return line.map((station) => station.StationName);
 }
-
-export const eachXiangshan = eachStationName(allLines["toXiangshan"]);
-export const eachZoo = eachStationName(allLines["toZoo"]);
-export const eachXindian = eachStationName(allLines["toXindian"]);
-export const eachNangangExhibition = eachStationName(
-  allLines["toNangangExhibition"]
-);
-export const eachDingpu = eachStationName(allLines["toDingpu"]);
-//環狀線
-export const eachDapinglin = eachStationName(allLines["toDapinglin"]);
-export const eachNewTaipeiPark = eachStationName(allLines["toNewTaipeiPark"]);
-//蘆洲
-export const eachLuzhuo = eachStationName(allLines["toLuzhuo"]);
-export const eachHuilong = eachStationName(allLines["toHuilong"]);
 
 // 完整的線
 export const xiangshanLine = ["象山站", ...eachXiangshan];
