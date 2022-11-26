@@ -1,35 +1,15 @@
-# vue-project
+## taipei MRT - Countdown system
 
-This template should help get you started developing with Vue 3 in Vite.
+everytime when you went to station that you can knew the train countdown time, 
+<br/>
+but if you want to know outside the station, you can search station countdown time on the website,
+<br/>
+to decide you should run for the train or slow your pace.
+<br/>
+and you can control your commuting time.
 
-## Recommended IDE Setup
+## technique
+* Vue 3
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+## api
+taipei MRT api
